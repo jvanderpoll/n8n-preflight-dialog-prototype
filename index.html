@@ -1869,8 +1869,14 @@ html&gt;body{padding:0}&lt;/style&gt;
       &lt;div class=&quot;warning&quot;&gt;You're about to permanently delete data. &lt;strong&gt;This cannot be reverted.&lt;/strong&gt; Review the destructive changes below, or go back and adjust your selection.&lt;/div&gt;
       &lt;div id=&quot;change-summary&quot;&gt;&lt;/div&gt;
       &lt;div id=&quot;change-list&quot; class=&quot;change-list&quot;&gt;&lt;/div&gt;
-      &lt;div id=&quot;project-confirmation&quot; hidden&gt;&lt;label for=&quot;delete-confirmation&quot;&gt;Type &lt;code&gt;DELETE&lt;/code&gt; to confirm project deletion.&lt;/label&gt;&lt;input id=&quot;delete-confirmation&quot; type=&quot;text&quot; autocomplete=&quot;off&quot; spellcheck=&quot;false&quot; /&gt;&lt;/div&gt;
+
       &lt;footer&gt;&lt;button type=&quot;button&quot; id=&quot;cancel-action&quot;&gt;Go back&lt;/button&gt;&lt;button type=&quot;button&quot; id=&quot;apply-action&quot; class=&quot;primary-action&quot;&gt;Apply destructive changes&lt;/button&gt;&lt;/footer&gt;
+    &lt;/section&gt;
+    &lt;section id=&quot;final-confirmation&quot; class=&quot;confirm-dialog&quot; hidden role=&quot;region&quot; aria-label=&quot;Final deletion confirmation&quot;&gt;
+      &lt;header&gt;&lt;div class=&quot;title-row&quot;&gt;&lt;i data-lucide=&quot;triangle-alert&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;h2&gt;Permanently delete data?&lt;/h2&gt;&lt;button type=&quot;button&quot; id=&quot;close-final&quot; aria-label=&quot;Return to review&quot;&gt;&lt;i data-lucide=&quot;x&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/button&gt;&lt;/div&gt;&lt;/header&gt;
+      &lt;div class=&quot;warning&quot;&gt;The reviewed changes will delete data permanently. This cannot be reverted.&lt;/div&gt;
+      &lt;div id=&quot;project-confirmation&quot; hidden&gt;&lt;label for=&quot;delete-confirmation&quot;&gt;Type &lt;code&gt;delete all data&lt;/code&gt; to confirm.&lt;/label&gt;&lt;input id=&quot;delete-confirmation&quot; type=&quot;text&quot; placeholder=&quot;delete all data&quot; autocomplete=&quot;off&quot; spellcheck=&quot;false&quot; /&gt;&lt;/div&gt;
+      &lt;footer&gt;&lt;button type=&quot;button&quot; id=&quot;back-final&quot;&gt;Go back&lt;/button&gt;&lt;button type=&quot;button&quot; id=&quot;confirm-final&quot; class=&quot;primary-action&quot;&gt;Confirm and apply&lt;/button&gt;&lt;/footer&gt;
     &lt;/section&gt;
     &lt;section id=&quot;result&quot; hidden aria-live=&quot;polite&quot;&gt;&lt;h2 id=&quot;result-title&quot;&gt;&lt;/h2&gt;&lt;p id=&quot;result-description&quot;&gt;&lt;/p&gt;&lt;div class=&quot;result-actions&quot;&gt;&lt;button type=&quot;button&quot; id=&quot;previous-cancel&quot;&gt;Cancel&lt;/button&gt;&lt;button type=&quot;button&quot; id=&quot;reopen&quot;&gt;Apply changes&lt;/button&gt;&lt;/div&gt;&lt;/section&gt;
   &lt;/div&gt;
@@ -1966,7 +1972,8 @@ function render(){
 const data=datasets[current];
 root.querySelector('#project-confirmation').hidden=!data.projects.length;
 root.querySelector('#delete-confirmation').value='';
-root.querySelector('#apply-action').disabled=!!data.projects.length;
+root.querySelector('#apply-action').disabled=false;
+root.querySelector('#final-confirmation').hidden=true;
 root.querySelector('.confirm-dialog').hidden=false;root.querySelector('#result').hidden=true;root.querySelector('#inspect-preview').hidden=true;
 root.querySelector('#change-summary').hidden=current!=='many';
 root.querySelector('#change-summary').textContent=`${data.tables.length} tables · ${data.projects.length} projects`;
@@ -1976,10 +1983,15 @@ root.querySelector('#change-list').innerHTML='&lt;table class=&quot;changes-tabl
 root.querySelectorAll('[data-scenario]').forEach(b=&gt;b.setAttribute('aria-pressed',String(b.dataset.scenario===current)));icons();requestAnimationFrame(updateFooter);
 }
 root.addEventListener('click',e=&gt;{const scenario=e.target.closest('[data-scenario]');if(scenario){current=scenario.dataset.scenario;render();return;}const inspect=e.target.closest('[data-inspect]');if(inspect){const name=inspect.dataset.inspect;root.querySelector('#inspect-name').textContent=name+' · Example destination preview';const table=datasets[current].tables.find(t=&gt;t.name===name);root.querySelector('#inspect-content').textContent=table?'Current columns: '+table.ops.map(o=&gt;o.name+(o.kind==='type'?' ('+o.from+')':'')).join(', '):'Project overview';root.querySelector('#inspect-preview').hidden=false;}});
-function finish(message,back=false){root.querySelector('.confirm-dialog').hidden=true;root.querySelector('#inspect-preview').hidden=true;root.querySelector('#result-title').textContent=message;root.querySelector('#result-description').textContent=back?'Your selection is kept. No changes have been applied.':'Example only';root.querySelector('#previous-cancel').hidden=!back;root.querySelector('#reopen').textContent=back?'Apply changes':'Review again';root.querySelector('#result').hidden=false;}
+function finish(message,back=false){root.querySelector('#final-confirmation').hidden=true;root.querySelector('.confirm-dialog').hidden=true;root.querySelector('#inspect-preview').hidden=true;root.querySelector('#result-title').textContent=message;root.querySelector('#result-description').textContent=back?'Your selection is kept. No changes have been applied.':'Example only';root.querySelector('#previous-cancel').hidden=!back;root.querySelector('#reopen').textContent=back?'Apply changes':'Review again';root.querySelector('#result').hidden=false;}
 const goBack=()=&gt;finish('Apply changes to Staging',true);
-root.querySelector('#delete-confirmation').addEventListener('input',e=&gt;{root.querySelector('#apply-action').disabled=datasets[current].projects.length&gt;0&amp;&amp;e.target.value!=='DELETE';});
-root.querySelector('#cancel-action').onclick=goBack;root.querySelector('#close-dialog').onclick=goBack;root.querySelector('#previous-cancel').onclick=()=&gt;finish('Apply cancelled');root.querySelector('#apply-action').onclick=()=&gt;finish('Changes applied');root.querySelector('#reopen').onclick=render;root.querySelector('#close-preview').onclick=()=&gt;{root.querySelector('#inspect-preview').hidden=true;};root.addEventListener('keydown',e=&gt;{if(e.key==='Escape'&amp;&amp;!root.querySelector('.confirm-dialog').hidden)goBack();});render();
+root.querySelector('#delete-confirmation').addEventListener('input',e=&gt;{root.querySelector('#confirm-final').disabled=datasets[current].projects.length&gt;0&amp;&amp;e.target.value!=='delete all data';});
+const returnToReview=()=&gt;{root.querySelector('#final-confirmation').hidden=true;root.querySelector('.confirm-dialog').hidden=false;root.querySelector('#apply-action').focus();};
+root.querySelector('#back-final').onclick=returnToReview;
+root.querySelector('#close-final').onclick=returnToReview;
+root.querySelector('#confirm-final').onclick=()=&gt;{if(datasets[current].projects.length&amp;&amp;root.querySelector('#delete-confirmation').value!=='delete all data')return;finish('Changes applied');};
+const openFinal=()=&gt;{root.querySelector('.confirm-dialog').hidden=true;root.querySelector('#inspect-preview').hidden=true;root.querySelector('#final-confirmation').hidden=false;root.querySelector('#delete-confirmation').value='';root.querySelector('#confirm-final').disabled=!!datasets[current].projects.length;(datasets[current].projects.length?root.querySelector('#delete-confirmation'):root.querySelector('#back-final')).focus();};
+root.querySelector('#cancel-action').onclick=goBack;root.querySelector('#close-dialog').onclick=goBack;root.querySelector('#previous-cancel').onclick=()=&gt;finish('Apply cancelled');root.querySelector('#apply-action').onclick=openFinal;root.querySelector('#reopen').onclick=render;root.querySelector('#close-preview').onclick=()=&gt;{root.querySelector('#inspect-preview').hidden=true;};root.addEventListener('keydown',e=&gt;{if(e.key==='Escape'){if(!root.querySelector('#final-confirmation').hidden)returnToReview();else if(!root.querySelector('.confirm-dialog').hidden)goBack();}});render();
 })();
 &lt;/script&gt;
 
