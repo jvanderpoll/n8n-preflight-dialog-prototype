@@ -1870,13 +1870,13 @@ html&gt;body{padding:0}&lt;/style&gt;
       &lt;div id=&quot;change-summary&quot;&gt;&lt;/div&gt;
       &lt;div id=&quot;change-list&quot; class=&quot;change-list&quot;&gt;&lt;/div&gt;
 
-      &lt;footer&gt;&lt;button type=&quot;button&quot; id=&quot;cancel-action&quot;&gt;Go back&lt;/button&gt;&lt;button type=&quot;button&quot; id=&quot;apply-action&quot; class=&quot;primary-action&quot;&gt;Apply destructive changes&lt;/button&gt;&lt;/footer&gt;
+      &lt;footer&gt;&lt;button type=&quot;button&quot; id=&quot;cancel-action&quot;&gt;Go back&lt;/button&gt;&lt;button type=&quot;button&quot; id=&quot;apply-action&quot; class=&quot;primary-action&quot;&gt;Continue&lt;/button&gt;&lt;/footer&gt;
     &lt;/section&gt;
     &lt;section id=&quot;final-confirmation&quot; class=&quot;confirm-dialog&quot; hidden role=&quot;region&quot; aria-label=&quot;Final deletion confirmation&quot;&gt;
       &lt;header&gt;&lt;div class=&quot;title-row&quot;&gt;&lt;i data-lucide=&quot;triangle-alert&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;h2&gt;Permanently delete data?&lt;/h2&gt;&lt;button type=&quot;button&quot; id=&quot;close-final&quot; aria-label=&quot;Return to review&quot;&gt;&lt;i data-lucide=&quot;x&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/button&gt;&lt;/div&gt;&lt;/header&gt;
       &lt;div class=&quot;warning&quot;&gt;The reviewed changes will delete data permanently. This cannot be reverted.&lt;/div&gt;
       &lt;div id=&quot;project-confirmation&quot; hidden&gt;&lt;label for=&quot;delete-confirmation&quot;&gt;Type &lt;code&gt;delete all data&lt;/code&gt; to confirm.&lt;/label&gt;&lt;input id=&quot;delete-confirmation&quot; type=&quot;text&quot; placeholder=&quot;delete all data&quot; autocomplete=&quot;off&quot; spellcheck=&quot;false&quot; /&gt;&lt;/div&gt;
-      &lt;footer&gt;&lt;button type=&quot;button&quot; id=&quot;back-final&quot;&gt;Go back&lt;/button&gt;&lt;button type=&quot;button&quot; id=&quot;confirm-final&quot; class=&quot;primary-action&quot;&gt;Confirm and apply&lt;/button&gt;&lt;/footer&gt;
+      &lt;footer&gt;&lt;button type=&quot;button&quot; id=&quot;back-final&quot;&gt;Cancel&lt;/button&gt;&lt;button type=&quot;button&quot; id=&quot;confirm-final&quot; class=&quot;primary-action&quot;&gt;Delete and apply&lt;/button&gt;&lt;/footer&gt;
     &lt;/section&gt;
     &lt;section id=&quot;result&quot; hidden aria-live=&quot;polite&quot;&gt;&lt;h2 id=&quot;result-title&quot;&gt;&lt;/h2&gt;&lt;p id=&quot;result-description&quot;&gt;&lt;/p&gt;&lt;div class=&quot;result-actions&quot;&gt;&lt;button type=&quot;button&quot; id=&quot;previous-cancel&quot;&gt;Cancel&lt;/button&gt;&lt;button type=&quot;button&quot; id=&quot;reopen&quot;&gt;Apply changes&lt;/button&gt;&lt;/div&gt;&lt;/section&gt;
   &lt;/div&gt;
@@ -1896,8 +1896,8 @@ html&gt;body{padding:0}&lt;/style&gt;
 #preflight-demo header{padding:22px 24px 16px}
 #preflight-demo .title-row{display:flex;align-items:center;gap:10px}
 #preflight-demo .title-row svg{color:var(--warning-ink);flex-shrink:0;width:20px;height:20px}
-#preflight-demo #close-dialog{margin-left:auto;border:0;padding:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-#preflight-demo #close-dialog svg{color:var(--subtle);width:18px;height:18px}
+#preflight-demo #close-dialog,#preflight-demo #close-final{margin-left:auto;border:0;padding:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+#preflight-demo #close-dialog svg,#preflight-demo #close-final svg{color:var(--subtle);width:18px;height:18px}
 #preflight-demo h2{font-size:20px;line-height:1.3;font-weight:500;margin:0}
 #preflight-demo header p{margin:6px 0 0;color:var(--subtle)}
 #preflight-demo .warning{color:var(--subtle);padding:0;margin:0 24px 16px}
