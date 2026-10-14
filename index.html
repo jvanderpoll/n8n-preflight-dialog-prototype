@@ -1857,11 +1857,12 @@ html&gt;body{padding:0}&lt;/style&gt;
 
 
 &lt;div id=&quot;preflight-demo&quot;&gt;
+  &lt;div class=&quot;prototype-context&quot;&gt;Preflight pauses Apply when changes would permanently delete data, so users can review and confirm before anything is applied.&lt;/div&gt;
   &lt;div class=&quot;scenario-bar&quot; aria-label=&quot;Example scenario&quot;&gt;
+    &lt;span&gt;Destructive changes:&lt;/span&gt;
     &lt;button type=&quot;button&quot; data-scenario=&quot;single&quot; aria-pressed=&quot;true&quot;&gt;Single&lt;/button&gt;
     &lt;button type=&quot;button&quot; data-scenario=&quot;multiple&quot; aria-pressed=&quot;false&quot;&gt;A few&lt;/button&gt;
     &lt;button type=&quot;button&quot; data-scenario=&quot;many&quot; aria-pressed=&quot;false&quot;&gt;Many&lt;/button&gt;
-    &lt;span&gt;Example data&lt;/span&gt;
   &lt;/div&gt;
   &lt;div class=&quot;preview-stage viz-dotted-background&quot;&gt;
     &lt;section class=&quot;confirm-dialog&quot; role=&quot;region&quot; aria-label=&quot;Destructive changes confirmation&quot;&gt;
@@ -1890,7 +1891,8 @@ html&gt;body{padding:0}&lt;/style&gt;
 #preflight-demo button:focus-visible,#preflight-demo summary:focus-visible{outline:2px solid var(--action);outline-offset:3px}
 #preflight-demo .scenario-bar{display:flex;gap:4px;align-items:center;flex-wrap:wrap;margin:0 0 16px;padding-right:90px}
 #preflight-demo .scenario-bar button[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
-#preflight-demo .scenario-bar span{color:var(--subtle);margin-left:8px;font-size:12px}
+#preflight-demo .scenario-bar span{color:var(--subtle);margin-right:8px;font-size:12px}
+#preflight-demo .prototype-context{background:var(--quiet);color:var(--ink);padding:12px 16px;margin-bottom:16px;border-radius:4px;font-size:12px}
 #preflight-demo .preview-stage{padding:20px 12px;min-height:280px;display:flex;align-items:flex-start;justify-content:center}
 #preflight-demo .confirm-dialog{width:100%;max-width:620px;background:var(--paper);border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 24px light-dark(#00000012,#00000030);overflow:hidden}
 #preflight-demo header{padding:22px 24px 16px}
