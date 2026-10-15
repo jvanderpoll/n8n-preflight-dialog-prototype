@@ -1994,9 +1994,9 @@ html&gt;body{padding:0}&lt;/style&gt;
 #preflight-demo .change-cell&gt;div+div{margin-top:8px}
 #preflight-demo .change-cell strong{font-weight:500}
 #preflight-demo .modification{color:var(--subtle);font-size:12px}
-#preflight-demo footer{padding:16px 24px;display:flex;justify-content:flex-end;gap:8px;background:var(--paper)}
-#preflight-demo footer.is-sticky{border-top:1px solid var(--line)}
-#preflight-demo #project-confirmation{padding:12px 24px 0}
+#preflight-demo footer{padding:16px 24px;display:flex;justify-content:flex-end;gap:8px;background:var(--paper);border-top:1px solid transparent}
+#preflight-demo footer.is-sticky{border-top-color:var(--line)}
+#preflight-demo #project-confirmation{padding:12px 24px 6px;flex-shrink:0}
 #preflight-demo #project-confirmation label{display:block;margin-bottom:8px}
 #preflight-demo #delete-confirmation{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:4px;background:var(--paper);color:var(--ink);font:inherit}
 #preflight-demo #delete-confirmation:focus-visible{outline:2px solid var(--action);outline-offset:2px}
@@ -2026,7 +2026,9 @@ many:{tables:[{name:'Invoices',ops:['legacy_reference','internal_note','old_stat
 let current='single';
 const changeList=root.querySelector('#change-list');
 const updateFooter=()=&gt;root.querySelector('footer').classList.toggle('is-sticky',changeList.scrollHeight&gt;changeList.clientHeight+1);
-new ResizeObserver(updateFooter).observe(changeList);
+let footerFrame=0;
+const scheduleFooter=()=&gt;{if(footerFrame)return;footerFrame=requestAnimationFrame(()=&gt;{footerFrame=0;updateFooter();});};
+new ResizeObserver(scheduleFooter).observe(changeList);
 const icons=()=&gt;{if(typeof lucide!=='undefined')lucide.createIcons({attrs:{width:16,height:16}})};
 const opsHtml=ops=&gt;ops.map(o=&gt;`&lt;div class=&quot;operation&quot;&gt;${o.kind==='remove'?'Remove':'Retype'} &lt;strong&gt;${o.name}&lt;/strong&gt;${o.kind==='type'?` · ${o.from} → ${o.to} (values lost)`:''}&lt;/div&gt;`).join('');
 const link=(name,kind='table')=&gt;`&lt;button type=&quot;button&quot; class=&quot;item-link&quot; data-inspect=&quot;${name}&quot; aria-label=&quot;Inspect ${name}&quot;&gt;&lt;i data-lucide=&quot;${kind==='project'?'folder':'table-2'}&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;span&gt;${name}&lt;/span&gt;&lt;i data-lucide=&quot;arrow-up-right&quot; class=&quot;open-arrow&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/button&gt;`;
