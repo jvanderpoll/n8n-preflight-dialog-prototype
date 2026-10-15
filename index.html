@@ -1952,7 +1952,8 @@ html&gt;body{padding:0}&lt;/style&gt;
 #preflight-demo #result{background:var(--paper);border-radius:8px;width:100%;max-width:620px}
 @media(max-width:700px){#preflight-demo .origin-page{grid-template-columns:1fr}#preflight-demo .app-sidebar{display:none}#preflight-demo .changes-layout{grid-template-columns:145px minmax(0,1fr)}#preflight-demo .origin-main{padding:14px}#preflight-demo #modal-layer{padding:12px}#preflight-demo .flow-nodes{gap:2px}#preflight-demo .flow-nodes&gt;div{width:42px}#preflight-demo .flow-nodes b{display:none}}
 @media(max-width:450px){#preflight-demo .origin-detail{display:none}#preflight-demo .changes-layout{grid-template-columns:1fr}#preflight-demo .origin-items{border:0}#preflight-demo .origin-toolbar{flex-wrap:wrap}}
-#preflight-demo .confirm-dialog{width:100%;max-width:620px;background:var(--paper);border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 24px light-dark(#00000012,#00000030);overflow:hidden}
+#preflight-demo .confirm-dialog{width:100%;max-width:620px;max-height:640px;display:flex;flex-direction:column;background:var(--paper);border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 24px light-dark(#00000012,#00000030);overflow:hidden}
+#preflight-demo .confirm-dialog&gt;header,#preflight-demo .confirm-dialog&gt;.warning,#preflight-demo .confirm-dialog&gt;footer,#preflight-demo .confirm-dialog&gt;#change-summary{flex-shrink:0}
 #preflight-demo header{padding:22px 24px 16px}
 #preflight-demo .title-row{display:flex;align-items:center;gap:10px}
 #preflight-demo .title-row svg{color:var(--warning-ink);flex-shrink:0;width:20px;height:20px}
@@ -1962,7 +1963,8 @@ html&gt;body{padding:0}&lt;/style&gt;
 #preflight-demo header p{margin:6px 0 0;color:var(--subtle)}
 #preflight-demo .warning{color:var(--subtle);padding:0;margin:0 24px 16px}
 #preflight-demo #change-summary{padding:0 24px 12px;color:var(--subtle);font-size:12px}
-#preflight-demo .change-list{padding:0 24px;max-height:350px;overflow-y:auto}
+#preflight-demo .change-list{padding:0 24px;min-height:0;overflow-y:auto;overscroll-behavior:contain}
+#preflight-demo .changes-table thead{position:sticky;top:0;background:var(--paper);z-index:1}
 #preflight-demo .group{border-top:1px solid var(--line);padding:14px 0}
 #preflight-demo .group-title{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}
 #preflight-demo .item-link{padding:0;border:0;background:none;color:var(--ink);display:inline-flex;align-items:center;gap:7px;text-align:left;font-weight:500}
@@ -2018,8 +2020,8 @@ const remove=name=&gt;({name,kind:'remove'});
 const type=(name,from,to)=&gt;({name,kind:'type',from,to});
 const datasets={
 single:{tables:[{name:'Invoices',ops:[remove('legacy_reference')]}],projects:[]},
-multiple:{tables:[{name:'Invoices',ops:[remove('legacy_reference'),remove('internal_note')]},{name:'Customers',ops:[type('credit_limit','Text','Number')]}],projects:[]},
-many:{tables:[{name:'Invoices',ops:['legacy_reference','internal_note','old_status','import_batch'].map(remove)},{name:'Customers',ops:[remove('legacy_id'),remove('old_segment'),type('credit_limit','Text','Number')]},{name:'Payments',ops:['external_ref','old_provider','migration_note'].map(remove)},{name:'Subscriptions',ops:[remove('plan_code'),remove('old_cycle'),type('renewal_date','Text','Date')]},{name:'Vendors',ops:['fax','legacy_code','old_address'].map(remove)},{name:'Expenses',ops:[remove('import_id'),remove('old_category'),type('amount','Text','Number')]},{name:'Approvals',ops:[remove('old_approver'),remove('legacy_rule')]},{name:'Receipts',ops:[remove('scan_reference')]}],projects:['Legacy billing','Sandbox imports']}
+multiple:{tables:[{name:'Invoices',ops:[remove('legacy_reference'),remove('internal_note')]},{name:'Customers',ops:[type('credit_limit','Text','Number')]},{name:'Payments',ops:[remove('old_provider')]}],projects:[]},
+many:{tables:[{name:'Invoices',ops:['legacy_reference','internal_note','old_status','import_batch'].map(remove)},{name:'Customers',ops:[remove('legacy_id'),remove('old_segment'),type('credit_limit','Text','Number')]},{name:'Payments',ops:['external_ref','old_provider','migration_note'].map(remove)},{name:'Subscriptions',ops:[remove('plan_code'),remove('old_cycle'),type('renewal_date','Text','Date')]},{name:'Vendors',ops:['fax','legacy_code','old_address'].map(remove)},{name:'Expenses',ops:[remove('import_id'),remove('old_category'),type('amount','Text','Number')]},{name:'Approvals',ops:[remove('old_approver'),remove('legacy_rule')]},{name:'Receipts',ops:[remove('scan_reference')]},{name:'Purchase orders',ops:[remove('old_supplier_id')]},{name:'Tax rates',ops:[type('percentage','Text','Number')]},{name:'Refunds',ops:[remove('legacy_reason')]},{name:'Accounts',ops:[remove('migration_status')]},{name:'Reconciliation',ops:[remove('old_match_id')]}],projects:['Legacy billing','Sandbox imports']}
 };
 let current='single';
 const changeList=root.querySelector('#change-list');
