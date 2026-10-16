@@ -1888,7 +1888,6 @@ html&gt;body{padding:0}&lt;/style&gt;
     &lt;section class=&quot;confirm-dialog&quot; role=&quot;region&quot; aria-label=&quot;Destructive changes confirmation&quot;&gt;
       &lt;header&gt;&lt;div class=&quot;title-row&quot;&gt;&lt;i data-lucide=&quot;triangle-alert&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;h2&gt;Confirm destructive changes&lt;/h2&gt;&lt;button type=&quot;button&quot; id=&quot;close-dialog&quot; aria-label=&quot;Close and return to changes&quot;&gt;&lt;i data-lucide=&quot;x&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/button&gt;&lt;/div&gt;&lt;/header&gt;
       &lt;div class=&quot;warning&quot;&gt;You're about to permanently delete data. &lt;strong&gt;This cannot be reverted.&lt;/strong&gt; Review the destructive changes below, or go back and adjust your selection.&lt;/div&gt;
-      &lt;div id=&quot;change-summary&quot;&gt;&lt;/div&gt;
       &lt;div id=&quot;change-list&quot; class=&quot;change-list&quot;&gt;&lt;/div&gt;
 
       &lt;footer&gt;&lt;button type=&quot;button&quot; id=&quot;cancel-action&quot;&gt;Cancel&lt;/button&gt;&lt;button type=&quot;button&quot; id=&quot;apply-action&quot; class=&quot;continue-action&quot;&gt;Continue&lt;/button&gt;&lt;/footer&gt;
@@ -2066,8 +2065,11 @@ reviewDialog.querySelector('h2').textContent=singleDialog?'Confirm destructive c
 root.querySelectorAll('[data-flow]').forEach(b=&gt;b.setAttribute('aria-pressed',String(b.dataset.flow===flow)));
 root.querySelector('#final-confirmation').hidden=true;
 root.querySelector('.confirm-dialog').hidden=false;root.querySelector('#result').hidden=true;root.querySelector('#inspect-preview').hidden=true;
-root.querySelector('#change-summary').hidden=current!=='many';
-root.querySelector('#change-summary').textContent=`${data.projects.length} projects · ${data.tables.length} tables`;
+const projectCount=data.projects.length;
+const tableCount=data.tables.length;
+const impact=(projectCount?`${projectCount} ${projectCount===1?'project':'projects'} and `:'')+`data from ${tableCount} ${tableCount===1?'table':'tables'}`;
+reviewDialog.querySelector('.warning').innerHTML=`You're about to permanently delete ${impact}. &lt;strong&gt;This cannot be reverted.&lt;/strong&gt; Review the destructive changes below, or go back and adjust your selection.`;
+finalDialog.querySelector('.warning').innerHTML=`You're about to permanently delete ${impact}. &lt;strong&gt;This cannot be reverted.&lt;/strong&gt;`;
 const humanList=names=&gt;names.length===1?names[0]:names.length===2?names.join(' and '):names.slice(0,-1).join(', ')+', and '+names[names.length-1];
 const describe=t=&gt;{const removed=t.ops.filter(o=&gt;o.kind==='remove').map(o=&gt;`&lt;code&gt;${o.name}&lt;/code&gt;`);return (removed.length?`&lt;div&gt;${removed.length===1?`The column ${removed[0]} and its values will be removed.`:`The columns ${humanList(removed)} will be removed, including their values.`}&lt;/div&gt;`:'')+t.ops.filter(o=&gt;o.kind==='type').map(o=&gt;`&lt;div&gt;The type of &lt;code&gt;${o.name}&lt;/code&gt; will change from &lt;code&gt;${o.from.toLowerCase()}&lt;/code&gt; to &lt;code&gt;${o.to.toLowerCase()}&lt;/code&gt;, removing its existing values.&lt;/div&gt;`).join('');};
 root.querySelector('#change-list').innerHTML='&lt;table class=&quot;changes-table&quot;&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Item&lt;/th&gt;&lt;th&gt;What will change&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;'+data.projects.map(p=&gt;`&lt;tr&gt;&lt;td&gt;${link(p,'project')}&lt;/td&gt;&lt;td&gt;This project and all its contents will be deleted.&lt;/td&gt;&lt;/tr&gt;`).join('')+data.tables.map(t=&gt;`&lt;tr&gt;&lt;td&gt;${link(t.name)}&lt;/td&gt;&lt;td class=&quot;change-cell&quot;&gt;${describe(t)}&lt;/td&gt;&lt;/tr&gt;`).join('')+'&lt;/tbody&gt;&lt;/table&gt;';
