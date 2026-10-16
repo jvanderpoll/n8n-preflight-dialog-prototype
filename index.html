@@ -1858,6 +1858,11 @@ html&gt;body{padding:0}&lt;/style&gt;
 
 &lt;div id=&quot;preflight-demo&quot;&gt;
   &lt;div class=&quot;prototype-context&quot;&gt;Preflight pauses Apply when changes would permanently delete data, so users can review and confirm before anything is applied.&lt;/div&gt;
+  &lt;div class=&quot;scenario-bar&quot; aria-label=&quot;Confirmation flow&quot;&gt;
+    &lt;span&gt;Confirmation:&lt;/span&gt;
+    &lt;button type=&quot;button&quot; data-flow=&quot;single&quot; aria-pressed=&quot;false&quot;&gt;Single dialog&lt;/button&gt;
+    &lt;button type=&quot;button&quot; data-flow=&quot;dual&quot; aria-pressed=&quot;true&quot;&gt;Two dialogs&lt;/button&gt;
+  &lt;/div&gt;
   &lt;div class=&quot;scenario-bar&quot; aria-label=&quot;Example scenario&quot;&gt;
     &lt;span&gt;Destructive changes:&lt;/span&gt;
     &lt;button type=&quot;button&quot; data-scenario=&quot;single&quot; aria-pressed=&quot;true&quot;&gt;Single&lt;/button&gt;
@@ -1884,13 +1889,13 @@ html&gt;body{padding:0}&lt;/style&gt;
       &lt;div id=&quot;change-summary&quot;&gt;&lt;/div&gt;
       &lt;div id=&quot;change-list&quot; class=&quot;change-list&quot;&gt;&lt;/div&gt;
 
-      &lt;footer&gt;&lt;button type=&quot;button&quot; id=&quot;cancel-action&quot;&gt;Cancel&lt;/button&gt;&lt;button type=&quot;button&quot; id=&quot;apply-action&quot; class=&quot;primary-action&quot;&gt;Continue&lt;/button&gt;&lt;/footer&gt;
+      &lt;footer&gt;&lt;button type=&quot;button&quot; id=&quot;cancel-action&quot;&gt;Cancel&lt;/button&gt;&lt;button type=&quot;button&quot; id=&quot;apply-action&quot; class=&quot;continue-action&quot;&gt;Continue&lt;/button&gt;&lt;/footer&gt;
     &lt;/section&gt;
     &lt;section id=&quot;final-confirmation&quot; class=&quot;confirm-dialog&quot; hidden role=&quot;region&quot; aria-label=&quot;Final deletion confirmation&quot;&gt;
       &lt;header&gt;&lt;div class=&quot;title-row&quot;&gt;&lt;i data-lucide=&quot;triangle-alert&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;h2&gt;Permanently delete data?&lt;/h2&gt;&lt;button type=&quot;button&quot; id=&quot;close-final&quot; aria-label=&quot;Close and return to changes&quot;&gt;&lt;i data-lucide=&quot;x&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/button&gt;&lt;/div&gt;&lt;/header&gt;
       &lt;div class=&quot;warning&quot;&gt;The reviewed changes will delete data permanently. This cannot be reverted.&lt;/div&gt;
-      &lt;div id=&quot;project-confirmation&quot; hidden&gt;&lt;label for=&quot;delete-confirmation&quot;&gt;Type &lt;code&gt;delete all data&lt;/code&gt; to confirm.&lt;/label&gt;&lt;input id=&quot;delete-confirmation&quot; type=&quot;text&quot; placeholder=&quot;delete all data&quot; autocomplete=&quot;off&quot; spellcheck=&quot;false&quot; /&gt;&lt;/div&gt;
-      &lt;footer&gt;&lt;button type=&quot;button&quot; id=&quot;back-final&quot;&gt;Cancel&lt;/button&gt;&lt;button type=&quot;button&quot; id=&quot;confirm-final&quot; class=&quot;primary-action&quot;&gt;Delete and apply&lt;/button&gt;&lt;/footer&gt;
+      &lt;div id=&quot;project-confirmation&quot; hidden&gt;&lt;label for=&quot;delete-confirmation&quot;&gt;Type &lt;code&gt;delete&lt;/code&gt; to confirm.&lt;/label&gt;&lt;input id=&quot;delete-confirmation&quot; type=&quot;text&quot; placeholder=&quot;delete&quot; autocomplete=&quot;off&quot; spellcheck=&quot;false&quot; /&gt;&lt;/div&gt;
+      &lt;footer&gt;&lt;button type=&quot;button&quot; id=&quot;back-final&quot;&gt;Cancel&lt;/button&gt;&lt;button type=&quot;button&quot; id=&quot;confirm-final&quot; class=&quot;primary-action&quot;&gt;Confirm deletion&lt;/button&gt;&lt;/footer&gt;
     &lt;/section&gt;
     &lt;section id=&quot;result&quot; hidden aria-live=&quot;polite&quot;&gt;&lt;h2 id=&quot;result-title&quot;&gt;&lt;/h2&gt;&lt;p id=&quot;result-description&quot;&gt;&lt;/p&gt;&lt;div class=&quot;result-actions&quot;&gt;&lt;button type=&quot;button&quot; id=&quot;previous-cancel&quot;&gt;Cancel&lt;/button&gt;&lt;button type=&quot;button&quot; id=&quot;reopen&quot;&gt;Apply changes&lt;/button&gt;&lt;/div&gt;&lt;/section&gt;
     &lt;/div&gt;
@@ -1985,9 +1990,9 @@ html&gt;body{padding:0}&lt;/style&gt;
 #preflight-demo .changes-table td{padding:12px 8px;vertical-align:top;border-bottom:1px solid var(--line);overflow-wrap:anywhere}
 #preflight-demo .changes-table th:first-child{width:30%}
 #preflight-demo .changes-table th:nth-child(2){width:70%}
-#preflight-demo .changes-table .item-link{font-weight:400;align-items:flex-start;gap:6px}
+#preflight-demo .changes-table .item-link{font-weight:400;align-items:flex-start;gap:6px;position:relative;max-width:100%}
 #preflight-demo .changes-table .item-link svg{flex-shrink:0;margin-top:3px}
-#preflight-demo .changes-table .item-link .open-arrow{opacity:0;transition:opacity .12s}
+#preflight-demo .changes-table .item-link .open-arrow{position:absolute;right:-16px;top:0;opacity:0;transition:opacity .12s}
 #preflight-demo .changes-table .item-link:hover .open-arrow,#preflight-demo .changes-table .item-link:focus-visible .open-arrow{opacity:1}
 #preflight-demo .change-cell code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px;color:var(--ink);background:var(--quiet);padding:2px 4px;border-radius:3px;overflow-wrap:anywhere}
 @media(hover:none){#preflight-demo .changes-table .item-link .open-arrow{opacity:1}}
@@ -2002,6 +2007,7 @@ html&gt;body{padding:0}&lt;/style&gt;
 #preflight-demo #delete-confirmation:focus-visible{outline:2px solid var(--action);outline-offset:2px}
 #preflight-demo button:disabled{opacity:.45;cursor:not-allowed}
 #preflight-demo button.primary-action{background:var(--action);border-color:var(--action);color:#fff}
+#preflight-demo button.continue-action{background:#e5683c;border-color:#e5683c;color:#fff}
 #preflight-demo #result{text-align:center;padding:64px 12px}
 #preflight-demo #result button{margin-top:16px}
 #preflight-demo #result-description{color:var(--subtle)}
@@ -2011,6 +2017,7 @@ html&gt;body{padding:0}&lt;/style&gt;
 #preflight-demo h3{font-size:16px;font-weight:500;margin:0}
 #preflight-demo #inspect-content{margin-top:12px;color:var(--subtle)}
 #preflight-demo [hidden]{display:none!important}
+@media(max-width:480px){#preflight-demo .changes-table th:first-child{width:38%}#preflight-demo .changes-table th:nth-child(2){width:62%}}
 @media(max-width:480px){#preflight-demo .preview-stage{padding:12px 0}#preflight-demo header{padding:18px 16px 14px}#preflight-demo .warning{margin:0 16px 14px}#preflight-demo #change-summary,#preflight-demo .change-list{padding-left:16px;padding-right:16px}#preflight-demo footer{padding:14px 16px}#preflight-demo .operation{grid-template-columns:20px minmax(0,1fr)}#preflight-demo .effect{grid-column:2}#preflight-demo .scenario-bar{padding-right:0}#preflight-demo .group-count{max-width:110px}}
 &lt;/style&gt;
 &lt;script&gt;
@@ -2024,6 +2031,11 @@ multiple:{tables:[{name:'Invoices',ops:[remove('legacy_reference'),remove('inter
 many:{tables:[{name:'Invoices',ops:['legacy_reference','internal_note','old_status','import_batch'].map(remove)},{name:'Customers',ops:[remove('legacy_id'),remove('old_segment'),type('credit_limit','Text','Number')]},{name:'Payments',ops:['external_ref','old_provider','migration_note'].map(remove)},{name:'Subscriptions',ops:[remove('plan_code'),remove('old_cycle'),type('renewal_date','Text','Date')]},{name:'Vendors',ops:['fax','legacy_code','old_address'].map(remove)},{name:'Expenses',ops:[remove('import_id'),remove('old_category'),type('amount','Text','Number')]},{name:'Approvals',ops:[remove('old_approver'),remove('legacy_rule')]},{name:'Receipts',ops:[remove('scan_reference')]},{name:'Purchase orders',ops:[remove('old_supplier_id')]},{name:'Tax rates',ops:[type('percentage','Text','Number')]},{name:'Refunds',ops:[remove('legacy_reason')]},{name:'Accounts',ops:[remove('migration_status')]},{name:'Reconciliation',ops:[remove('old_match_id')]}],projects:['Legacy billing','Sandbox imports']}
 };
 let current='single';
+let flow='dual';
+const reviewDialog=root.querySelector('.confirm-dialog');
+const finalDialog=root.querySelector('#final-confirmation');
+const confirmationField=root.querySelector('#project-confirmation');
+const reviewAction=root.querySelector('#apply-action');
 const changeList=root.querySelector('#change-list');
 const updateFooter=()=&gt;root.querySelector('footer').classList.toggle('is-sticky',changeList.scrollHeight&gt;changeList.clientHeight+1);
 let footerFrame=0;
@@ -2038,7 +2050,13 @@ root.querySelector('.origin-page').inert=true;
 const data=datasets[current];
 root.querySelector('#project-confirmation').hidden=false;
 root.querySelector('#delete-confirmation').value='';
-root.querySelector('#apply-action').disabled=false;
+const singleDialog=flow==='single';
+(singleDialog?reviewDialog:finalDialog).insertBefore(confirmationField,(singleDialog?reviewDialog:finalDialog).querySelector('footer'));
+reviewAction.disabled=singleDialog;
+reviewAction.textContent=singleDialog?'Confirm deletion':'Continue';
+reviewAction.className=singleDialog?'primary-action':'continue-action';
+reviewDialog.querySelector('h2').textContent=singleDialog?'Confirm destructive changes':'Review destructive changes';
+root.querySelectorAll('[data-flow]').forEach(b=&gt;b.setAttribute('aria-pressed',String(b.dataset.flow===flow)));
 root.querySelector('#final-confirmation').hidden=true;
 root.querySelector('.confirm-dialog').hidden=false;root.querySelector('#result').hidden=true;root.querySelector('#inspect-preview').hidden=true;
 root.querySelector('#change-summary').hidden=current!=='many';
@@ -2057,15 +2075,16 @@ function updateSelection(){const checks=Array.from(root.querySelectorAll('.origi
 root.querySelectorAll('.origin-selection').forEach(c=&gt;c.addEventListener('change',updateSelection));
 root.querySelector('#select-all').addEventListener('change',e=&gt;{root.querySelectorAll('.origin-selection').forEach(c=&gt;{c.checked=e.target.checked;});updateSelection();});
 root.querySelector('#origin-apply').onclick=()=&gt;{render();root.querySelector('#cancel-action').focus();};
-root.addEventListener('click',e=&gt;{const scenario=e.target.closest('[data-scenario]');if(scenario){current=scenario.dataset.scenario;render();return;}const inspect=e.target.closest('[data-inspect]');if(inspect){const name=inspect.dataset.inspect;root.querySelector('#inspect-name').textContent=name+' · Example destination preview';const table=datasets[current].tables.find(t=&gt;t.name===name);root.querySelector('#inspect-content').textContent=table?'Current columns: '+table.ops.map(o=&gt;o.name+(o.kind==='type'?' ('+o.from+')':'')).join(', '):'Project overview';root.querySelector('#inspect-preview').hidden=false;}});
+root.addEventListener('click',e=&gt;{const flowButton=e.target.closest('[data-flow]');if(flowButton){flow=flowButton.dataset.flow;render();return;}const scenario=e.target.closest('[data-scenario]');if(scenario){current=scenario.dataset.scenario;render();return;}const inspect=e.target.closest('[data-inspect]');if(inspect){const name=inspect.dataset.inspect;root.querySelector('#inspect-name').textContent=name+' · Example destination preview';const table=datasets[current].tables.find(t=&gt;t.name===name);root.querySelector('#inspect-content').textContent=table?'Current columns: '+table.ops.map(o=&gt;o.name+(o.kind==='type'?' ('+o.from+')':'')).join(', '):'Project overview';root.querySelector('#inspect-preview').hidden=false;}});
 function finish(message,back=false){root.querySelector('#final-confirmation').hidden=true;root.querySelector('.confirm-dialog').hidden=true;root.querySelector('#inspect-preview').hidden=true;root.querySelector('#result-title').textContent=message;root.querySelector('#result-description').textContent=back?'Your selection is kept. No changes have been applied.':'Example only';root.querySelector('#previous-cancel').hidden=!back;root.querySelector('#reopen').textContent=back?'Apply changes':'Review again';root.querySelector('#result').hidden=false;}
 const goBack=()=&gt;{root.querySelector('#modal-layer').hidden=true;root.querySelector('#final-confirmation').hidden=true;root.querySelector('#inspect-preview').hidden=true;root.querySelector('#delete-confirmation').value='';root.querySelector('.origin-page').inert=false;root.querySelector('#origin-apply').focus();};
-root.querySelector('#delete-confirmation').addEventListener('input',e=&gt;{root.querySelector('#confirm-final').disabled=e.target.value!=='delete all data';});
+root.querySelector('#delete-confirmation').addEventListener('input',e=&gt;{(flow==='single'?reviewAction:root.querySelector('#confirm-final')).disabled=e.target.value!=='delete';});
 root.querySelector('#back-final').onclick=goBack;
 root.querySelector('#close-final').onclick=goBack;
-root.querySelector('#confirm-final').onclick=()=&gt;{if(root.querySelector('#delete-confirmation').value!=='delete all data')return;finish('Changes applied');};
+const confirmDeletion=()=&gt;{if(root.querySelector('#delete-confirmation').value!=='delete')return;finish('Changes applied');};
+root.querySelector('#confirm-final').onclick=confirmDeletion;
 const openFinal=()=&gt;{root.querySelector('.confirm-dialog').hidden=true;root.querySelector('#inspect-preview').hidden=true;root.querySelector('#final-confirmation').hidden=false;root.querySelector('#delete-confirmation').value='';root.querySelector('#confirm-final').disabled=true;root.querySelector('#delete-confirmation').focus();};
-root.querySelector('#cancel-action').onclick=goBack;root.querySelector('#close-dialog').onclick=goBack;root.querySelector('#previous-cancel').onclick=()=&gt;finish('Apply cancelled');root.querySelector('#apply-action').onclick=openFinal;root.querySelector('#reopen').onclick=render;root.querySelector('#close-preview').onclick=()=&gt;{root.querySelector('#inspect-preview').hidden=true;};root.addEventListener('keydown',e=&gt;{if(e.key==='Escape'&amp;&amp;!root.querySelector('#modal-layer').hidden)goBack();});render();
+root.querySelector('#cancel-action').onclick=goBack;root.querySelector('#close-dialog').onclick=goBack;root.querySelector('#previous-cancel').onclick=()=&gt;finish('Apply cancelled');root.querySelector('#apply-action').onclick=()=&gt;flow==='single'?confirmDeletion():openFinal();root.querySelector('#reopen').onclick=render;root.querySelector('#close-preview').onclick=()=&gt;{root.querySelector('#inspect-preview').hidden=true;};root.addEventListener('keydown',e=&gt;{if(e.key==='Escape'&amp;&amp;!root.querySelector('#modal-layer').hidden)goBack();});render();
 })();
 &lt;/script&gt;
 
