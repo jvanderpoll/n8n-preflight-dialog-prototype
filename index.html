@@ -1861,8 +1861,8 @@ html&gt;body{padding:0}&lt;/style&gt;
   &lt;div class=&quot;prototype-controls&quot;&gt;
   &lt;div class=&quot;scenario-bar&quot; aria-label=&quot;Confirmation flow&quot;&gt;
     &lt;span&gt;Confirmation:&lt;/span&gt;
-    &lt;button type=&quot;button&quot; data-flow=&quot;single&quot; aria-pressed=&quot;false&quot;&gt;Single dialog&lt;/button&gt;
-    &lt;button type=&quot;button&quot; data-flow=&quot;dual&quot; aria-pressed=&quot;true&quot;&gt;Two dialogs&lt;/button&gt;
+    &lt;button type=&quot;button&quot; data-flow=&quot;single&quot; aria-pressed=&quot;true&quot;&gt;Single dialog&lt;/button&gt;
+    &lt;button type=&quot;button&quot; data-flow=&quot;dual&quot; aria-pressed=&quot;false&quot;&gt;Two dialogs&lt;/button&gt;
   &lt;/div&gt;
   &lt;div class=&quot;scenario-bar&quot; aria-label=&quot;Example scenario&quot;&gt;
     &lt;span&gt;Destructive changes:&lt;/span&gt;
@@ -2039,7 +2039,7 @@ multiple:{tables:[{name:'Invoices',ops:[remove('legacy_reference'),remove('inter
 many:{tables:[{name:'Invoices',ops:['legacy_reference','internal_note','old_status','import_batch'].map(remove)},{name:'Customers',ops:[remove('legacy_id'),remove('old_segment'),type('credit_limit','Text','Number')]},{name:'Payments',ops:['external_ref','old_provider','migration_note'].map(remove)},{name:'Subscriptions',ops:[remove('plan_code'),remove('old_cycle'),type('renewal_date','Text','Date')]},{name:'Vendors',ops:['fax','legacy_code','old_address'].map(remove)},{name:'Expenses',ops:[remove('import_id'),remove('old_category'),type('amount','Text','Number')]},{name:'Approvals',ops:[remove('old_approver'),remove('legacy_rule')]},{name:'Receipts',ops:[remove('scan_reference')]},{name:'Purchase orders',ops:[remove('old_supplier_id')]},{name:'Tax rates',ops:[type('percentage','Text','Number')]},{name:'Refunds',ops:[remove('legacy_reason')]},{name:'Accounts',ops:[remove('migration_status')]},{name:'Reconciliation',ops:[remove('old_match_id')]}],projects:['Legacy billing','Sandbox imports']}
 };
 let current='single';
-let flow='dual';
+let flow='single';
 const reviewDialog=root.querySelector('.confirm-dialog');
 const finalDialog=root.querySelector('#final-confirmation');
 const confirmationField=root.querySelector('#project-confirmation');
