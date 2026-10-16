@@ -6,7 +6,7 @@
 <meta name="referrer" content="no-referrer">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://persistent.oaistatic.com/plugins/visualize/charts/ https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'unsafe-inline' blob: data: https://persistent.oaistatic.com/plugins/visualize/charts/ https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://persistent.oaistatic.com/plugins/visualize/charts/ https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://persistent.oaistatic.com/plugins/visualize/charts/ https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://persistent.oaistatic.com/plugins/visualize/charts/ https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <title>preflight-dialog.html</title>
-<style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{margin:0}body{box-sizing:border-box;padding:1rem;background:inherit}iframe{display:block;width:100%;max-width:1180px;height:calc(100vh - 2rem);margin:0 auto;border:0}</style>
+<style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{margin:0}body{box-sizing:border-box;padding:1rem;background:inherit}iframe{display:block;width:100%;max-width:1440px;height:calc(100vh - 2rem);margin:0 auto;border:0}</style>
 
 </head>
 <body>
@@ -1858,6 +1858,7 @@ html&gt;body{padding:0}&lt;/style&gt;
 
 &lt;div id=&quot;preflight-demo&quot;&gt;
   &lt;div class=&quot;prototype-context&quot;&gt;Preflight pauses Apply when changes would permanently delete data, so users can review and confirm before anything is applied.&lt;/div&gt;
+  &lt;div class=&quot;prototype-controls&quot;&gt;
   &lt;div class=&quot;scenario-bar&quot; aria-label=&quot;Confirmation flow&quot;&gt;
     &lt;span&gt;Confirmation:&lt;/span&gt;
     &lt;button type=&quot;button&quot; data-flow=&quot;single&quot; aria-pressed=&quot;false&quot;&gt;Single dialog&lt;/button&gt;
@@ -1868,6 +1869,7 @@ html&gt;body{padding:0}&lt;/style&gt;
     &lt;button type=&quot;button&quot; data-scenario=&quot;single&quot; aria-pressed=&quot;true&quot;&gt;Single&lt;/button&gt;
     &lt;button type=&quot;button&quot; data-scenario=&quot;multiple&quot; aria-pressed=&quot;false&quot;&gt;A few&lt;/button&gt;
     &lt;button type=&quot;button&quot; data-scenario=&quot;many&quot; aria-pressed=&quot;false&quot;&gt;Many&lt;/button&gt;
+  &lt;/div&gt;
   &lt;/div&gt;
   &lt;div class=&quot;preview-stage&quot;&gt;
     &lt;div class=&quot;origin-page&quot;&gt;
@@ -1908,12 +1910,13 @@ html&gt;body{padding:0}&lt;/style&gt;
 #preflight-demo button{font:inherit;cursor:pointer;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:8px 12px;min-height:36px}
 #preflight-demo button:hover{filter:brightness(.96)}
 #preflight-demo button:focus-visible,#preflight-demo summary:focus-visible{outline:2px solid var(--action);outline-offset:3px}
-#preflight-demo .scenario-bar{display:flex;gap:4px;align-items:center;flex-wrap:wrap;margin:0 0 16px;padding-right:90px}
+#preflight-demo .prototype-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-bottom:16px}
+#preflight-demo .scenario-bar{display:flex;gap:4px;align-items:center;flex-wrap:wrap;min-width:0}
 #preflight-demo .scenario-bar button[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 #preflight-demo .scenario-bar span{color:var(--subtle);margin-right:8px;font-size:12px}
 #preflight-demo .prototype-context{color:var(--subtle);margin-bottom:16px;font-size:12px}
-#preflight-demo .preview-stage{position:relative;min-height:740px;background:var(--paper);border:1px solid var(--line);border-radius:6px;overflow:hidden}
-#preflight-demo .origin-page{display:grid;grid-template-columns:140px minmax(0,1fr);min-height:740px;background:var(--paper)}
+#preflight-demo .preview-stage{position:relative;height:900px;max-height:none;background:var(--paper);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+#preflight-demo .origin-page{display:grid;grid-template-columns:140px minmax(0,1fr);height:100%;background:var(--paper)}
 #preflight-demo .app-sidebar{border-right:1px solid var(--line);padding:16px 8px;position:relative;font-size:12px}
 #preflight-demo .app-sidebar&gt;div{display:flex;gap:8px;align-items:center;padding:9px 6px;overflow-wrap:anywhere}
 #preflight-demo .app-sidebar .brand{font-size:20px;font-weight:500;padding-bottom:24px}
@@ -1957,7 +1960,7 @@ html&gt;body{padding:0}&lt;/style&gt;
 #preflight-demo #result{background:var(--paper);border-radius:8px;width:100%;max-width:620px}
 @media(max-width:700px){#preflight-demo .origin-page{grid-template-columns:1fr}#preflight-demo .app-sidebar{display:none}#preflight-demo .changes-layout{grid-template-columns:145px minmax(0,1fr)}#preflight-demo .origin-main{padding:14px}#preflight-demo #modal-layer{padding:12px}#preflight-demo .flow-nodes{gap:2px}#preflight-demo .flow-nodes&gt;div{width:42px}#preflight-demo .flow-nodes b{display:none}}
 @media(max-width:450px){#preflight-demo .origin-detail{display:none}#preflight-demo .changes-layout{grid-template-columns:1fr}#preflight-demo .origin-items{border:0}#preflight-demo .origin-toolbar{flex-wrap:wrap}}
-#preflight-demo .confirm-dialog{width:100%;max-width:620px;max-height:640px;display:flex;flex-direction:column;background:var(--paper);border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 24px light-dark(#00000012,#00000030);overflow:hidden}
+#preflight-demo .confirm-dialog{width:100%;max-width:620px;max-height:min(760px,100%);display:flex;flex-direction:column;background:var(--paper);border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 24px light-dark(#00000012,#00000030);overflow:hidden}
 #preflight-demo .confirm-dialog&gt;header,#preflight-demo .confirm-dialog&gt;.warning,#preflight-demo .confirm-dialog&gt;footer,#preflight-demo .confirm-dialog&gt;#change-summary{flex-shrink:0}
 #preflight-demo header{padding:22px 24px 16px}
 #preflight-demo .title-row{display:flex;align-items:center;gap:10px}
@@ -2001,6 +2004,8 @@ html&gt;body{padding:0}&lt;/style&gt;
 #preflight-demo .modification{color:var(--subtle);font-size:12px}
 #preflight-demo footer{padding:16px 24px;display:flex;justify-content:flex-end;gap:8px;background:var(--paper);border-top:1px solid transparent}
 #preflight-demo footer.is-sticky{border-top-color:var(--line)}
+#preflight-demo[data-confirmation-flow=single] footer.is-sticky{border-top-color:transparent}
+#preflight-demo[data-confirmation-flow=single] .changes-table tbody tr:last-child td{border-bottom:0}
 #preflight-demo #project-confirmation{padding:12px 24px 6px;flex-shrink:0}
 #preflight-demo #project-confirmation label{display:block;margin-bottom:8px}
 #preflight-demo #delete-confirmation{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:4px;background:var(--paper);color:var(--ink);font:inherit}
@@ -2018,6 +2023,7 @@ html&gt;body{padding:0}&lt;/style&gt;
 #preflight-demo #inspect-content{margin-top:12px;color:var(--subtle)}
 #preflight-demo [hidden]{display:none!important}
 @media(max-width:480px){#preflight-demo .changes-table th:first-child{width:38%}#preflight-demo .changes-table th:nth-child(2){width:62%}}
+@media(max-width:650px){#preflight-demo .prototype-controls{grid-template-columns:1fr;gap:10px}#preflight-demo .preview-stage{height:800px}}
 @media(max-width:480px){#preflight-demo .preview-stage{padding:12px 0}#preflight-demo header{padding:18px 16px 14px}#preflight-demo .warning{margin:0 16px 14px}#preflight-demo #change-summary,#preflight-demo .change-list{padding-left:16px;padding-right:16px}#preflight-demo footer{padding:14px 16px}#preflight-demo .operation{grid-template-columns:20px minmax(0,1fr)}#preflight-demo .effect{grid-column:2}#preflight-demo .scenario-bar{padding-right:0}#preflight-demo .group-count{max-width:110px}}
 &lt;/style&gt;
 &lt;script&gt;
@@ -2045,6 +2051,7 @@ const icons=()=&gt;{if(typeof lucide!=='undefined')lucide.createIcons({attrs:{wi
 const opsHtml=ops=&gt;ops.map(o=&gt;`&lt;div class=&quot;operation&quot;&gt;${o.kind==='remove'?'Remove':'Retype'} &lt;strong&gt;${o.name}&lt;/strong&gt;${o.kind==='type'?` · ${o.from} → ${o.to} (values lost)`:''}&lt;/div&gt;`).join('');
 const link=(name,kind='table')=&gt;`&lt;button type=&quot;button&quot; class=&quot;item-link&quot; data-inspect=&quot;${name}&quot; aria-label=&quot;Inspect ${name}&quot;&gt;&lt;i data-lucide=&quot;${kind==='project'?'folder':'table-2'}&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;span&gt;${name}&lt;/span&gt;&lt;i data-lucide=&quot;arrow-up-right&quot; class=&quot;open-arrow&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/button&gt;`;
 function render(){
+root.dataset.confirmationFlow=flow;
 root.querySelector('#modal-layer').hidden=false;
 root.querySelector('.origin-page').inert=true;
 const data=datasets[current];
