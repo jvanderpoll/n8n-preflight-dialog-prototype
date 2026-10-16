@@ -1990,6 +1990,9 @@ html&gt;body{padding:0}&lt;/style&gt;
 #preflight-demo .changes-table{width:100%;border-collapse:collapse;text-align:left;table-layout:fixed;margin-bottom:16px}
 #preflight-demo .changes-table th{font-weight:400;color:var(--subtle);font-size:12px;padding:8px 8px;border-bottom:1px solid var(--line)}
 #preflight-demo .changes-table td{padding:12px 8px;vertical-align:top;border-bottom:1px solid var(--line);overflow-wrap:anywhere}
+#preflight-demo .changes-table tbody tr{cursor:pointer}
+#preflight-demo .changes-table tbody tr:hover,#preflight-demo .changes-table tbody tr:focus-within{background:var(--quiet)}
+#preflight-demo .changes-table tbody tr:hover .open-arrow,#preflight-demo .changes-table tbody tr:focus-within .open-arrow{opacity:1}
 #preflight-demo .changes-table th:first-child{width:30%}
 #preflight-demo .changes-table th:nth-child(2){width:70%}
 #preflight-demo .changes-table .item-link{font-weight:400;align-items:flex-start;gap:6px;position:relative;max-width:100%}
@@ -2067,12 +2070,12 @@ root.querySelector('#final-confirmation').hidden=true;
 root.querySelector('.confirm-dialog').hidden=false;root.querySelector('#result').hidden=true;root.querySelector('#inspect-preview').hidden=true;
 const projectCount=data.projects.length;
 const tableCount=data.tables.length;
-const impact=(projectCount?`${projectCount} ${projectCount===1?'project':'projects'} and `:'')+`data from ${tableCount} ${tableCount===1?'table':'tables'}`;
+const impact=(projectCount?`${projectCount} ${projectCount===1?'project':'projects'} and `:'')+`${tableCount} ${tableCount===1?'table':'tables'}`;
 reviewDialog.querySelector('.warning').innerHTML=`You're about to permanently delete ${impact}. &lt;strong&gt;This cannot be reverted.&lt;/strong&gt; Review the destructive changes below, or go back and adjust your selection.`;
 finalDialog.querySelector('.warning').innerHTML=`You're about to permanently delete ${impact}. &lt;strong&gt;This cannot be reverted.&lt;/strong&gt;`;
 const humanList=names=&gt;names.length===1?names[0]:names.length===2?names.join(' and '):names.slice(0,-1).join(', ')+', and '+names[names.length-1];
 const describe=t=&gt;{const removed=t.ops.filter(o=&gt;o.kind==='remove').map(o=&gt;`&lt;code&gt;${o.name}&lt;/code&gt;`);return (removed.length?`&lt;div&gt;${removed.length===1?`The column ${removed[0]} and its values will be removed.`:`The columns ${humanList(removed)} will be removed, including their values.`}&lt;/div&gt;`:'')+t.ops.filter(o=&gt;o.kind==='type').map(o=&gt;`&lt;div&gt;The type of &lt;code&gt;${o.name}&lt;/code&gt; will change from &lt;code&gt;${o.from.toLowerCase()}&lt;/code&gt; to &lt;code&gt;${o.to.toLowerCase()}&lt;/code&gt;, removing its existing values.&lt;/div&gt;`).join('');};
-root.querySelector('#change-list').innerHTML='&lt;table class=&quot;changes-table&quot;&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Item&lt;/th&gt;&lt;th&gt;What will change&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;'+data.projects.map(p=&gt;`&lt;tr&gt;&lt;td&gt;${link(p,'project')}&lt;/td&gt;&lt;td&gt;This project and all its contents will be deleted.&lt;/td&gt;&lt;/tr&gt;`).join('')+data.tables.map(t=&gt;`&lt;tr&gt;&lt;td&gt;${link(t.name)}&lt;/td&gt;&lt;td class=&quot;change-cell&quot;&gt;${describe(t)}&lt;/td&gt;&lt;/tr&gt;`).join('')+'&lt;/tbody&gt;&lt;/table&gt;';
+root.querySelector('#change-list').innerHTML='&lt;table class=&quot;changes-table&quot;&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Item&lt;/th&gt;&lt;th&gt;What will change&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;'+data.projects.map(p=&gt;`&lt;tr data-inspect=&quot;${p}&quot;&gt;&lt;td&gt;${link(p,'project')}&lt;/td&gt;&lt;td&gt;This project and all its contents will be deleted.&lt;/td&gt;&lt;/tr&gt;`).join('')+data.tables.map(t=&gt;`&lt;tr data-inspect=&quot;${t.name}&quot;&gt;&lt;td&gt;${link(t.name)}&lt;/td&gt;&lt;td class=&quot;change-cell&quot;&gt;${describe(t)}&lt;/td&gt;&lt;/tr&gt;`).join('')+'&lt;/tbody&gt;&lt;/table&gt;';
 root.querySelectorAll('[data-scenario]').forEach(b=&gt;b.setAttribute('aria-pressed',String(b.dataset.scenario===current)));icons();requestAnimationFrame(updateFooter);
 }
 const workflowItems=[['Builds','layers'],['Payment Handler','workflow'],['Payment Capture','workflow'],['Notifications','folder'],['Incidents','folder-plus'],['Email summary','workflow'],['Chargeback triage','workflow']];
